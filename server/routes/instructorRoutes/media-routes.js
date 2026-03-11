@@ -47,4 +47,30 @@ router.delete("/delete/:id", async (req, res) => {
   }
 });
 
+router.post("/bulk-upload", upload.array("files", 10), async (req, res) => {
+  try {
+    const uploadPromises = req.files.map((fileItem) =>
+      uploadMediaToCloudinary(fileItem.path),
+    );
+
+    if (!req.files || req.files.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "No files uploaded",
+      });
+    }
+    const results = await Promise.all(uploadPromises);
+    res.status(200).json({
+      success: true,
+      data: results,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: "Error in bulk uploading",
+    });
+  }
+});
+
 module.exports = router;
