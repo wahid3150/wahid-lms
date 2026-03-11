@@ -2,8 +2,9 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
-const authRoutes = require("./routes/userRoutes");
+const authRoutes = require("./routes/authRoutes/userRoutes");
 const mediaRoutes = require("./routes/instructorRoutes/media-routes");
+const instructorCourseRoute = require("./routes/instructorRoutes/course-routes");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -28,6 +29,7 @@ mongoose
 // routes configuration
 app.use("/auth", authRoutes);
 app.use("/media", mediaRoutes);
+app.use("/instructor/course", instructorCourseRoute);
 
 app.use((err, req, res, next) => {
   console.log(err.stack);
