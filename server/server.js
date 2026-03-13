@@ -6,6 +6,7 @@ const authRoutes = require("./routes/authRoutes/userRoutes");
 const mediaRoutes = require("./routes/instructorRoutes/media-routes");
 const instructorCourseRoute = require("./routes/instructorRoutes/course-routes");
 const studentViewCourseRoutes = require("./routes/studentRoutes/course-routes");
+const studentViewOrderRoutes = require("./routes/studentRoutes/order-routes");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -32,6 +33,7 @@ app.use("/auth", authRoutes);
 app.use("/media", mediaRoutes);
 app.use("/instructor/course", instructorCourseRoute);
 app.use("/student/courses", studentViewCourseRoutes);
+app.use("/student/order", studentViewOrderRoutes);
 
 app.use((err, req, res, next) => {
   console.log(err.stack);
@@ -42,5 +44,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Sever is running on port ${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });
